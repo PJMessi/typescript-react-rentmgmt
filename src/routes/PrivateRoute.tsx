@@ -1,5 +1,5 @@
 import { Route, RouteProps } from 'react-router-dom';
-import MainLayout from '../components/layouts/main.layout';
+import MainLayout from '../components/layouts/main/MainLayout';
 
 const PrivateRoute = ({
   children,

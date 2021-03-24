@@ -28,12 +28,6 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 'off',
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto',
-      },
-    ],
     "react/react-in-jsx-scope": "off",
     "react/button-has-type": "off",
     "react/jsx-props-no-spreading": "off",

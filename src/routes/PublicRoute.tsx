@@ -1,5 +1,5 @@
 import { Route, RouteProps } from 'react-router-dom';
-import AuthLayout from '../components/layouts/auth.layout';
+import AuthLayout from '../components/layouts/AuthLayout';
 
 const PublicRoute = ({
   children,

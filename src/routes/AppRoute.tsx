@@ -7,8 +7,6 @@ import PublicRoute from './PublicRoute';
 const AppRoute = (): JSX.Element => {
   return (
     <>
-      <h1>App Routes</h1>
-
       <Router>
         <Switch>
           <PrivateRoute path="/" exact>
