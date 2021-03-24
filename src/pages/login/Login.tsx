@@ -11,7 +11,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useForm } from 'react-hook-form';
 import Copyright from '../../components/Copyright';
+import { useAppDispatch } from '../../redux/store';
+import { requestLogin } from '../../actions/authAction';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +38,21 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = (): JSX.Element => {
   const classes = useStyles();
+
+  const dispatch = useAppDispatch();
+
+  const { register, handleSubmit, errors } = useForm<{
+    email: string;
+    password: string;
+  }>();
+
+  const handleLoginForm = () => {
+    requestLogin(dispatch, {
+      email: 'pjmessi25@gmail.com',
+      password: 'passworsd',
+    });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -45,7 +63,11 @@ const Login = (): JSX.Element => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit(handleLoginForm)}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -53,20 +75,26 @@ const Login = (): JSX.Element => {
             fullWidth
             id="email"
             label="Email Address"
-            name="email"
             autoComplete="email"
             autoFocus
+            name="email"
+            inputRef={register({ required: true })}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="password"
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
+            name="password"
+            inputRef={register({ required: true })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
