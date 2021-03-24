@@ -10,13 +10,7 @@ export type User = {
 
 const initialState: {
   isLoggedIn: boolean;
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    createdAt: Date;
-    updatedAt: Date;
-  } | null;
+  user: User | null;
   token: string | null;
   loading: boolean;
   error: {
@@ -30,7 +24,6 @@ const initialState: {
   error: null,
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export const authSlice = createSlice({
   name: 'auth',
 
@@ -46,13 +39,9 @@ export const authSlice = createSlice({
       action: PayloadAction<{ token: string; user: User }>
     ) => {
       state.user = action.payload.user;
-
       state.token = action.payload.token;
-
       state.isLoggedIn = true;
-
       state.loading = false;
-
       state.error = null;
     },
 
@@ -61,7 +50,6 @@ export const authSlice = createSlice({
       action: PayloadAction<{ error: { message: string } }>
     ) => {
       state.loading = false;
-
       state.error = action.payload.error;
     },
   },

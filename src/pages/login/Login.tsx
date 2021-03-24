@@ -41,15 +41,17 @@ const Login = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit, errors } = useForm<{
+  type LoginFormAttributes = {
     email: string;
     password: string;
-  }>();
+  };
 
-  const handleLoginForm = () => {
+  const { register, handleSubmit, errors } = useForm<LoginFormAttributes>();
+
+  const handleLoginForm = (data: LoginFormAttributes) => {
     requestLogin(dispatch, {
-      email: 'pjmessi25@gmail.com',
-      password: 'passworsd',
+      email: data.email,
+      password: data.password,
     });
   };
 
