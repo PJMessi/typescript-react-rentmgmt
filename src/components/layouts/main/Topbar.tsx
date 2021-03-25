@@ -1,14 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import { useLocation } from 'react-router-dom';
-
+import { AccountCircle } from '@material-ui/icons';
+import { Menu, MenuItem } from '@material-ui/core';
 import useStyles from './styles';
 
 type PropType = {
@@ -23,6 +22,31 @@ const Appbar = ({ open, setOpen }: PropType): JSX.Element => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
 
   const appTitle = useMemo(() => {
     switch (location.pathname) {
@@ -67,13 +91,19 @@ const Appbar = ({ open, setOpen }: PropType): JSX.Element => {
             {appTitle}
           </Typography>
 
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+          <IconButton
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleProfileMenuOpen}
+            color="inherit"
+          >
+            <AccountCircle />
           </IconButton>
         </Toolbar>
       </AppBar>
+      {renderMenu}
     </>
   );
 };

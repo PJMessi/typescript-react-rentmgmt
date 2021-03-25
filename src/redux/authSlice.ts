@@ -5,7 +5,12 @@ import { AnyAction } from 'redux';
 import type { RootState } from './store';
 import callLoginApi from '../apicalls/auth/loginApiCall';
 import { showSnackbar } from './snackbarSlice';
-import axiosInterface from '../apicalls/axiosInstance';
+import axiosInstance from '../apicalls/axiosInstance';
+
+const storedToken = localStorage.getItem('token') || null;
+if (storedToken) {
+  axiosInstance.defaults.headers.common.Authorization = `Bearer ${storedToken}`;
+}
 
 export type User = {
   id: number;
@@ -27,9 +32,9 @@ export const authSlice = createSlice({
   name: 'auth',
 
   initialState: {
-    isLoggedIn: false,
+    isLoggedIn: storedToken !== null,
     user: null,
-    token: null,
+    token: storedToken,
     loading: false,
     errorMessage: null,
   } as AuthState,
@@ -70,7 +75,7 @@ export const requestLogin = (credentials: {
     dispatch(login({ token, user }));
 
     localStorage.setItem('token', token);
-    axiosInterface.defaults.headers.common.Authorization = `Bearer ${token}`;
+    axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
   } catch (error) {
     if (error.response) {
       const errorMessage: string = error.response.data.message;
