@@ -4,6 +4,7 @@ import Invoice from '../pages/invoices/Invoice';
 import Dashboard from '../pages/dashboard/Dashboard';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import Room from '../pages/rooms/Room';
 
 const AppRoute = (): JSX.Element => {
   return (
@@ -12,6 +13,10 @@ const AppRoute = (): JSX.Element => {
         <Switch>
           <PrivateRoute path="/" exact>
             <Dashboard />
+          </PrivateRoute>
+
+          <PrivateRoute path="/rooms" exact>
+            <Room />
           </PrivateRoute>
 
           <PrivateRoute path="/invoices" exact>

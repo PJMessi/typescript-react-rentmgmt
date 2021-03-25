@@ -74,6 +74,7 @@ const Login = (): JSX.Element => {
             inputRef={register({ required: true })}
             error={!!errors.email}
             helperText={errors.email?.message}
+            value="pjmessi25@gmail.com"
           />
           <TextField
             variant="outlined"
@@ -88,6 +89,7 @@ const Login = (): JSX.Element => {
             inputRef={register({ required: true })}
             error={!!errors.password}
             helperText={errors.password?.message}
+            value="password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

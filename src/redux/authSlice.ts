@@ -5,6 +5,7 @@ import { AnyAction } from 'redux';
 import type { RootState } from './store';
 import callLoginApi from '../apicalls/auth/loginApiCall';
 import { showSnackbar } from './snackbarSlice';
+import axiosInterface from '../apicalls/axiosInstance';
 
 export type User = {
   id: number;
@@ -53,9 +54,9 @@ export const authSlice = createSlice({
 });
 
 export const { updateLoadingAndError, login } = authSlice.actions;
-export const selectAuth = (state: RootState): AuthState => state.auth;
 export default authSlice.reducer;
 
+/** Makes API request to login user and updates the state and localstorage accordingly. */
 export const requestLogin = (credentials: {
   email: string;
   password: string;
@@ -63,9 +64,13 @@ export const requestLogin = (credentials: {
   dispatch(updateLoadingAndError({ loading: true }));
   try {
     const apiResponse = await callLoginApi(credentials);
+
     const { token }: { token: string } = apiResponse.data.data;
     const { user }: { user: User } = apiResponse.data.data;
     dispatch(login({ token, user }));
+
+    localStorage.setItem('token', token);
+    axiosInterface.defaults.headers.common.Authorization = `Bearer ${token}`;
   } catch (error) {
     if (error.response) {
       const errorMessage: string = error.response.data.message;

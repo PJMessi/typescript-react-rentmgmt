@@ -1,6 +1,18 @@
-import { Divider, Drawer, IconButton } from '@material-ui/core';
+import {
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
 import clsx from 'clsx';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
+import HomeIcon from '@material-ui/icons/Home';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import useStyles from './styles';
 
 type PropType = {
@@ -9,6 +21,7 @@ type PropType = {
 };
 
 const Sidebar = ({ open, setOpen }: PropType): JSX.Element => {
+  const location = useLocation();
   const classes = useStyles();
   const handleDrawerClose = () => {
     setOpen(false);
@@ -28,6 +41,43 @@ const Sidebar = ({ open, setOpen }: PropType): JSX.Element => {
           </IconButton>
         </div>
         <Divider />
+        <List>
+          <ListItem
+            component={RouterLink}
+            to="/"
+            button
+            selected={location.pathname === '/'}
+          >
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+
+          <ListItem
+            component={RouterLink}
+            to="/rooms"
+            button
+            selected={location.pathname === '/rooms'}
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Rooms" />
+          </ListItem>
+
+          <ListItem
+            component={RouterLink}
+            to="/invoices"
+            button
+            selected={location.pathname === '/invoices'}
+          >
+            <ListItemIcon>
+              <ReceiptIcon />
+            </ListItemIcon>
+            <ListItemText primary="Invoices" />
+          </ListItem>
+        </List>
       </Drawer>
     </>
   );
