@@ -4,11 +4,14 @@ import authReducer from './authSlice';
 import snackbarReducer from './snackbarSlice';
 // eslint-disable-next-line import/no-cycle
 import roomReducer from './roomSlice';
+// eslint-disable-next-line import/no-cycle
+import invoiceReducer from './invoiceSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     room: roomReducer,
+    invoice: invoiceReducer,
     snackbar: snackbarReducer,
   },
 });

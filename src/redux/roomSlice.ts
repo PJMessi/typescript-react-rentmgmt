@@ -5,6 +5,7 @@ import { AnyAction } from 'redux';
 import type { RootState } from './store';
 import callFetchRoomsApi from '../apicalls/rooms/fetchRooms';
 import { showSnackbar } from './snackbarSlice';
+import type { Family } from './invoiceSlice';
 
 export type Room = {
   id: number;
@@ -12,6 +13,9 @@ export type Room = {
   description: string;
   status: 'OCCUPIED' | 'EMPTY';
   price: number;
+  createdAt: Date;
+  updatedAt: Date;
+  family: Family | null;
 };
 
 export type RoomState = {

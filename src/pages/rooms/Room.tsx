@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import {
   Chip,
+  Link,
   makeStyles,
   Paper,
   Table,
@@ -41,6 +42,7 @@ const Room = (): JSX.Element => {
               <TableCell align="left">Description</TableCell>
               <TableCell align="left">Status</TableCell>
               <TableCell align="left">Price&nbsp;(NPR)</TableCell>
+              <TableCell align="left">Family</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -63,6 +65,11 @@ const Room = (): JSX.Element => {
                     />
                   </TableCell>
                   <TableCell align="left">{room.price}</TableCell>
+                  <TableCell align="left">
+                    <Link href="/" variant="body2">
+                      {room.family !== null ? room.family.name : '-'}
+                    </Link>
+                  </TableCell>
                 </TableRow>
               );
             })}
