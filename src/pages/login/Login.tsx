@@ -9,45 +9,39 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
+import { useLocation, useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 import Copyright from '../../components/Copyright';
-import { useAppDispatch } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { requestLogin } from '../../redux/authSlice';
+import useStyles from './loginStyles';
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+type LoginFormAttributes = {
+  email: string;
+  password: string;
+};
 
 const Login = (): JSX.Element => {
   const classes = useStyles();
 
   const dispatch = useAppDispatch();
+  const { isLoggedIn } = useAppSelector((state) => state.auth);
 
-  type LoginFormAttributes = {
-    email: string;
-    password: string;
-  };
+  const location = useLocation<{ from: { pathname: string } }>();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      let redirectLocation = location.state.from;
+      if (!redirectLocation) redirectLocation = { pathname: '/' };
+
+      history.replace(redirectLocation);
+    }
+  }, [isLoggedIn, location, history]);
 
   const { register, handleSubmit, errors } = useForm<LoginFormAttributes>();
-
   const handleLoginForm = (data: LoginFormAttributes) => {
     dispatch(requestLogin(data));
   };
