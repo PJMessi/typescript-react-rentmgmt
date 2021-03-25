@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import authReducer from './auth';
-import snackbarReducer from './snackbar';
+import authReducer from './authSlice';
+import snackbarReducer from './snackbarSlice';
 
 const store = configureStore({
   reducer: {

@@ -14,7 +14,7 @@ import Container from '@material-ui/core/Container';
 import { useForm } from 'react-hook-form';
 import Copyright from '../../components/Copyright';
 import { useAppDispatch } from '../../redux/store';
-import { requestLogin } from '../../actions/authAction';
+import { requestLogin } from '../../redux/authSlice';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,10 +49,7 @@ const Login = (): JSX.Element => {
   const { register, handleSubmit, errors } = useForm<LoginFormAttributes>();
 
   const handleLoginForm = (data: LoginFormAttributes) => {
-    requestLogin(dispatch, {
-      email: data.email,
-      password: data.password,
-    });
+    dispatch(requestLogin(data));
   };
 
   return (
