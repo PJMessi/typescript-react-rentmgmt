@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { useLocation } from 'react-router-dom';
 
 import useStyles from './styles';
 
@@ -17,10 +18,24 @@ type PropType = {
 
 const Appbar = ({ open, setOpen }: PropType): JSX.Element => {
   const classes = useStyles();
+  const location = useLocation();
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+
+  const appTitle = useMemo(() => {
+    switch (location.pathname) {
+      case '/':
+        return 'Dashboard';
+      case '/rooms':
+        return 'Rooms';
+      case '/invoices':
+        return 'Invoices';
+      default:
+        return '';
+    }
+  }, [location.pathname]);
 
   return (
     <>
@@ -49,7 +64,7 @@ const Appbar = ({ open, setOpen }: PropType): JSX.Element => {
             noWrap
             className={classes.title}
           >
-            Dashboard
+            {appTitle}
           </Typography>
 
           <IconButton color="inherit">
