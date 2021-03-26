@@ -56,6 +56,8 @@ const Appbar = ({ open, setOpen }: PropType): JSX.Element => {
         return 'Rooms';
       case '/invoices':
         return 'Invoices';
+      case '/families':
+        return 'Families';
       default:
         return '';
     }

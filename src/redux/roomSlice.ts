@@ -5,7 +5,7 @@ import { AnyAction } from 'redux';
 import type { RootState } from './store';
 import callFetchRoomsApi from '../apicalls/rooms/fetchRooms';
 import { showSnackbar } from './snackbarSlice';
-import type { Family } from './invoiceSlice';
+import type { Family } from './familySlice';
 
 export type Room = {
   id: number;

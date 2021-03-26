@@ -6,12 +6,14 @@ import snackbarReducer from './snackbarSlice';
 import roomReducer from './roomSlice';
 // eslint-disable-next-line import/no-cycle
 import invoiceReducer from './invoiceSlice';
+import familyReducer from './familySlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     room: roomReducer,
     invoice: invoiceReducer,
+    family: familyReducer,
     snackbar: snackbarReducer,
   },
 });

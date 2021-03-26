@@ -13,6 +13,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import HomeIcon from '@material-ui/icons/Home';
 import ReceiptIcon from '@material-ui/icons/Receipt';
+import GroupIcon from '@material-ui/icons/Group';
 import useStyles from './styles';
 
 type PropType = {
@@ -52,6 +53,18 @@ const Sidebar = ({ open, setOpen }: PropType): JSX.Element => {
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
+          </ListItem>
+
+          <ListItem
+            component={RouterLink}
+            to="/families"
+            button
+            selected={location.pathname === '/families'}
+          >
+            <ListItemIcon>
+              <GroupIcon />
+            </ListItemIcon>
+            <ListItemText primary="Families" />
           </ListItem>
 
           <ListItem

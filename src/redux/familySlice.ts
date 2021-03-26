@@ -4,37 +4,37 @@ import {
   PayloadAction,
   ThunkAction,
 } from '@reduxjs/toolkit';
-import callFetchInvoicesApi from '../apicalls/invoices/fetchInvoices';
+import callFetchFamiliesApi from '../apicalls/families/fetchFamilies';
+import type { Room } from './roomSlice';
 import { showSnackbar } from './snackbarSlice';
 import type { RootState } from './store';
-import type { Family } from './familySlice';
 
-type Invoice = {
+export type Family = {
   id: number;
-  familyId: number;
+  name: string;
+  roomId: number;
+  status: 'ACTIVE' | 'LEFT';
+  sourceOfIncome: string;
   amount: number;
-  endDate: Date;
-  startDate: Date;
-  status: 'PENDING' | 'PAID';
   createdAt: Date;
   updatedAt: Date;
-  family: Family;
+  room: Room | null;
 };
 
-type InvoiceState = {
-  loading: boolean;
+type FamilyState = {
+  families: Family[];
   errorMessage: string | null;
-  invoices: Invoice[];
+  loading: boolean;
 };
 
-const invoiceSlice = createSlice({
-  name: 'invoice',
+const familySlice = createSlice({
+  name: 'family',
 
   initialState: {
+    families: [],
     loading: false,
     errorMessage: null,
-    invoices: [],
-  } as InvoiceState,
+  } as FamilyState,
 
   reducers: {
     updateLoadingAndError: (
@@ -45,18 +45,18 @@ const invoiceSlice = createSlice({
       state.errorMessage = action.payload.errorMessage || null;
     },
 
-    setInvoices: (state, action: PayloadAction<{ invoices: Invoice[] }>) => {
-      state.invoices = action.payload.invoices;
+    setRooms: (state, action: PayloadAction<{ families: Family[] }>) => {
+      state.families = action.payload.families;
       state.loading = false;
       state.errorMessage = null;
     },
   },
 });
 
-export const { updateLoadingAndError, setInvoices } = invoiceSlice.actions;
-export default invoiceSlice.reducer;
+export const { updateLoadingAndError, setRooms } = familySlice.actions;
+export default familySlice.reducer;
 
-export const requestForInvoices = (): ThunkAction<
+export const requestForFamilies = (): ThunkAction<
   void,
   RootState,
   unknown,
@@ -64,9 +64,9 @@ export const requestForInvoices = (): ThunkAction<
 > => async (dispatch) => {
   dispatch(updateLoadingAndError({ loading: true }));
   try {
-    const apiResponse = await callFetchInvoicesApi();
-    const { invoices }: { invoices: Invoice[] } = apiResponse.data.data;
-    dispatch(setInvoices({ invoices }));
+    const apiResponse = await callFetchFamiliesApi();
+    const { families }: { families: Family[] } = apiResponse.data.data;
+    dispatch(setRooms({ families }));
   } catch (error) {
     if (error.response) {
       const errorMessage: string = error.response.data.message;
