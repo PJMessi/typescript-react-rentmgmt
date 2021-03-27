@@ -59,7 +59,7 @@ const Sidebar = ({ open, setOpen }: PropType): JSX.Element => {
             component={RouterLink}
             to="/families"
             button
-            selected={location.pathname === '/families'}
+            selected={location.pathname.startsWith('/families')}
           >
             <ListItemIcon>
               <GroupIcon />

@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import Room from '../pages/rooms/Room';
 import Family from '../pages/families/Family';
+import Members from '../pages/members/Members';
 
 const AppRoute = (): JSX.Element => {
   return (
@@ -18,6 +19,10 @@ const AppRoute = (): JSX.Element => {
 
           <PrivateRoute path="/families" exact>
             <Family />
+          </PrivateRoute>
+
+          <PrivateRoute path="/families/:familyId/members" exact>
+            <Members />
           </PrivateRoute>
 
           <PrivateRoute path="/rooms" exact>

@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 import { useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { requestForFamilies } from '../../redux/familySlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 
@@ -48,6 +49,7 @@ const Family = (): JSX.Element => {
               <TableCell align="left">Status</TableCell>
               <TableCell align="left">Started Date</TableCell>
               <TableCell align="left">Room</TableCell>
+              <TableCell align="left">Members</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -75,6 +77,15 @@ const Family = (): JSX.Element => {
                   <TableCell align="left">
                     <Link href="/" variant="body2">
                       {family.room ? family.room.name : '-'}
+                    </Link>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Link
+                      component={RouterLink}
+                      to={`families/${family.id}/members`}
+                      variant="body2"
+                    >
+                      Show members
                     </Link>
                   </TableCell>
                 </TableRow>
