@@ -1,4 +1,4 @@
-# Rent Management Application APIs
+# Rent Management Application Dashboard (Work In Progress)
 Application that tracks the renting rooms, rentees, payments, etc for landlords/houseowners. **Node JS** is used for the backend and **MySQL** is used for storing data. **React** is used in the frontend.
 
 ## Links
